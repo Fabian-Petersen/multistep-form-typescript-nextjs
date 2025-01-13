@@ -69,17 +69,34 @@ export const MultiFormProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateFields = <T extends Partial<FormInputProps>>(fields: T) => {
     // $ Immediate update for UI responsiveness
-    setData((prev) => ({ ...prev, ...fields }));
-
-    // $ Clear the previous timeout
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
-
-    debounceRef.current = setTimeout(() => {
-      console.log("Debounced update:", fields);
-    }, 500);
+    setData((prev) => {
+      const newData = { ...prev, ...fields };
+      console.log("New data state:", newData); // Debug new state
+      return newData;
+    });
   };
+
+  const contextValues = {
+    validationErrors,
+    setValidationErrors,
+    validationStatus,
+    setValidationStatus,
+    data,
+    setData,
+    updateFields,
+  };
+
+  // Debug render value
+  console.log("Provider rendering with data:", data);
+
+  // $ Clear the previous timeout
+  if (debounceRef.current) {
+    clearTimeout(debounceRef.current);
+  }
+
+  debounceRef.current = setTimeout(() => {
+    console.log("Debounced update:", data);
+  }, 500);
 
   // Debug logging
   useEffect(() => {
@@ -87,17 +104,7 @@ export const MultiFormProvider: React.FC<{ children: ReactNode }> = ({
   }, [data]);
 
   return (
-    <MultiFormContext.Provider
-      value={{
-        validationErrors,
-        setValidationErrors,
-        validationStatus,
-        setValidationStatus,
-        data,
-        setData,
-        updateFields,
-      }}
-    >
+    <MultiFormContext.Provider value={contextValues}>
       {children}
     </MultiFormContext.Provider>
   );

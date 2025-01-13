@@ -20,13 +20,16 @@ type PaymentFormProps = PaymentForm & {
 const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
   updateFields,
 }) => {
+  const { data } = useMultiFormContext();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (updateFields) {
+      console.log(
+        `Updating field ${e.target.name} with value ${e.target.value}`
+      );
       updateFields({ [e.target.name]: e.target.value });
     }
   };
 
-  const { data } = useMultiFormContext();
   return (
     <FormRowsWrapper>
       <FormRowInput
@@ -36,7 +39,7 @@ const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
         className=""
         placeholderText="Enter Card Number"
         onChange={handleChange}
-        value={data.cardNumber}
+        value={data.cardNumber ?? ""}
       />
       <FormRowInput
         type="text"
@@ -44,7 +47,7 @@ const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
         labelText="Name on Card"
         placeholderText="Card Holder's Name"
         onChange={handleChange}
-        value={data.cardHolder}
+        value={data.cardHolder ?? ""}
       />
       <FormRowInput
         type="date"
@@ -52,7 +55,7 @@ const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
         labelText="Expiry Date"
         placeholderText="Expiry Date"
         onChange={handleChange}
-        value={data.expiryDate}
+        value={data.expiryDate ?? ""}
       />
       <FormRowInput
         type="text"
@@ -60,7 +63,7 @@ const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
         labelText="CVV"
         placeholderText="cvv"
         onChange={handleChange}
-        value={data.cvv}
+        value={data.cvv ?? ""}
       />
     </FormRowsWrapper>
   );

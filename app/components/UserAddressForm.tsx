@@ -16,10 +16,8 @@ type AddressFormProps = AddressForm & {
   updateFields: (fields: Partial<AddressFormProps>) => void;
 };
 
-const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
-  updateFields,
-}) => {
-  const { data } = useMultiFormContext();
+const UserAddressForm: React.FC<Partial<AddressFormProps>> = () => {
+  const { data, updateFields } = useMultiFormContext();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (updateFields) {
       updateFields({ [e.target.name]: e.target.value });
@@ -34,7 +32,7 @@ const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
         labelText="Address"
         className=""
         placeholderText="Enter Name"
-        value={data.street}
+        value={data.street ?? ""}
         onChange={handleChange}
         // required
       />
@@ -43,7 +41,7 @@ const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
         name="province"
         labelText="Province"
         placeholderText="Province"
-        value={data.province}
+        value={data.province ?? ""}
         onChange={handleChange}
         // required
       />
@@ -52,7 +50,7 @@ const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
         name="city"
         labelText="City"
         placeholderText="City"
-        value={data.city}
+        value={data.city ?? ""}
         onChange={handleChange}
         // required
       />
@@ -61,7 +59,7 @@ const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
         name="postalCode"
         labelText="Postal Code"
         placeholderText="Enter name"
-        value={data.postalCode}
+        value={data.postalCode ?? ""}
         onChange={handleChange}
         // required
       />
