@@ -17,7 +17,7 @@ export type FormInputProps = {
   cvv: string;
 };
 
-const formInputData: FormInputProps = {
+const defaultValues = {
   firstName: "",
   lastName: "",
   email: "",
@@ -34,4 +34,4 @@ const formInputData: FormInputProps = {
   cvv: "",
 };
 
-export default formInputData;
+export default defaultValues;

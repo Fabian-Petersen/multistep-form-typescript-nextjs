@@ -1,69 +1,70 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import FormRowInput from "./multi-step-form/customComponents/FormRowInput";
 import FormRowsWrapper from "./multi-step-form/customComponents/FormRowsWrapper";
-import { useMultiFormContext } from "../context_api/useMultiFormContext";
 
-type AddressForm = {
-  city: string;
-  street: string;
-  postalCode: string;
-  province: string;
-};
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "@/public/schema/formSchema";
 
-type AddressFormProps = AddressForm & {
-  updateFields: (fields: Partial<AddressFormProps>) => void;
-};
+const UserAddressForm: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+  } = useFormContext<FormData>();
 
-const UserAddressForm: React.FC<Partial<AddressFormProps>> = ({
-  updateFields,
-}) => {
-  const { data } = useMultiFormContext();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (updateFields) {
-      updateFields({ [e.target.name]: e.target.value });
-    }
-  };
+  // Log values when component mounts
+  useEffect(() => {
+    console.log("Current values:", getValues());
+  }, [getValues]);
 
   return (
     <FormRowsWrapper>
       <FormRowInput
         type="text"
-        name="street"
+        {...register("street")}
         labelText="Address"
         className=""
         placeholderText="Enter Name"
-        value={data.street}
-        onChange={handleChange}
-        // required
+        error={
+          errors.street
+            ? { type: "manual", message: errors.street.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="province"
+        {...register("province")}
         labelText="Province"
         placeholderText="Province"
-        value={data.province}
-        onChange={handleChange}
-        // required
+        error={
+          errors.province
+            ? { type: "manual", message: errors.province.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="city"
+        {...register("city")}
         labelText="City"
         placeholderText="City"
-        value={data.city}
-        onChange={handleChange}
-        // required
+        error={
+          errors.city
+            ? { type: "manual", message: errors.city.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="postalCode"
+        {...register("postalCode")}
         labelText="Postal Code"
         placeholderText="Enter name"
-        value={data.postalCode}
-        onChange={handleChange}
-        // required
+        error={
+          errors.postalCode
+            ? { type: "manual", message: errors.postalCode.message || "" }
+            : undefined
+        }
       />
     </FormRowsWrapper>
   );

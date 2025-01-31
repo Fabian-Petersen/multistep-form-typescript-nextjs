@@ -1,66 +1,70 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import FormRowInput from "./multi-step-form/customComponents/FormRowInput";
 import FormRowsWrapper from "./multi-step-form/customComponents/FormRowsWrapper";
-import { useMultiFormContext } from "../context_api/useMultiFormContext";
-// import formData from "@/public/data/formData";
 
-type PaymentForm = {
-  cardNumber: string;
-  cardHolder: string;
-  expiryDate: string;
-  cvv: string;
-};
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "@/public/schema/formSchema";
 
-type PaymentFormProps = PaymentForm & {
-  updateFields: (fields: Partial<PaymentForm>) => void;
-};
+const PaymentDetailsForm: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+  } = useFormContext<FormData>();
 
-const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
-  updateFields,
-}) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (updateFields) {
-      updateFields({ [e.target.name]: e.target.value });
-    }
-  };
+  // Log values when component mounts
+  useEffect(() => {
+    console.log("Current values:", getValues());
+  }, [getValues]);
 
-  const { data } = useMultiFormContext();
   return (
     <FormRowsWrapper>
       <FormRowInput
         type="text"
-        name="cardNumber"
+        {...register("cardNumber")}
         labelText="cardNumber"
         className=""
         placeholderText="Enter Card Number"
-        onChange={handleChange}
-        value={data.cardNumber}
+        error={
+          errors.cardNumber
+            ? { type: "manual", message: errors.cardNumber.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="cardHolder"
+        {...register("cardHolder")}
         labelText="Name on Card"
         placeholderText="Card Holder's Name"
-        onChange={handleChange}
-        value={data.cardHolder}
+        error={
+          errors.cardHolder
+            ? { type: "manual", message: errors.cardHolder.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="date"
-        name="expiryDate"
+        {...register("expiryDate")}
         labelText="Expiry Date"
         placeholderText="Expiry Date"
-        onChange={handleChange}
-        value={data.expiryDate}
+        error={
+          errors.expiryDate
+            ? { type: "manual", message: errors.expiryDate.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="cvv"
+        {...register("cvv")}
         labelText="CVV"
         placeholderText="cvv"
-        onChange={handleChange}
-        value={data.cvv}
+        error={
+          errors.cvv
+            ? { type: "manual", message: errors.cvv.message || "" }
+            : undefined
+        }
       />
     </FormRowsWrapper>
   );

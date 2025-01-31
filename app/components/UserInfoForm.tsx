@@ -1,96 +1,86 @@
 "use client";
 // $ Form Component for the User Information
 
-import React from "react";
+import React, { useEffect } from "react";
 import FormRowInput from "./multi-step-form/customComponents/FormRowInput";
 import FormRowsWrapper from "./multi-step-form/customComponents/FormRowsWrapper";
-import { useMultiFormContext } from "../context_api/useMultiFormContext";
 
-// $ Form Types
-type UserForm = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  DOB: string;
-};
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "@/public/schema/formSchema";
 
-type UserInfoFormProps = UserForm & {
-  updateFields: (fields: Partial<UserForm>) => void;
-};
+const UserInfoForm: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+  } = useFormContext<FormData>();
 
-const UserInfoForm: React.FC<Partial<UserInfoFormProps>> = ({
-  updateFields,
-}) => {
-  const { data } = useMultiFormContext();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (updateFields) {
-      updateFields({ [e.target.name]: e.target.value });
-    }
-  };
+  // Log values when component mounts
+  useEffect(() => {
+    console.log("Current values:", getValues());
+  }, [getValues]);
 
   return (
     <FormRowsWrapper>
       <FormRowInput
         type="text"
-        name="firstName"
+        {...register("firstName")}
         labelText="First Name"
         placeholderText="Enter Name"
-        value={data.firstName || ""}
-        onChange={handleChange}
+        error={
+          errors.firstName
+            ? { type: "manual", message: errors.firstName.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="lastName"
+        {...register("lastName")}
         labelText="Last Name"
         placeholderText="Enter Last Name"
-        value={data.lastName || ""}
-        onChange={handleChange}
+        error={
+          errors.lastName
+            ? { type: "manual", message: errors.lastName.message || "" }
+            : undefined
+        }
       />
+
       <FormRowInput
         type="email"
-        name="email"
+        {...register("email")}
         labelText="Email"
         placeholderText="Enter email"
-        value={data.email || ""}
-        onChange={handleChange}
+        error={
+          errors.email
+            ? { type: "manual", message: errors.email.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="text"
-        name="phone"
+        {...register("phone")}
         labelText="Phone Number"
         placeholderText="Enter phone number"
-        value={data.phone || ""}
-        onChange={handleChange}
+        error={
+          errors.phone
+            ? { type: "manual", message: errors.phone.message || "" }
+            : undefined
+        }
       />
       <FormRowInput
         type="date"
-        name="DOB"
+        {...register("DOB")}
         className="placeholder:text-gray-800"
         labelText="Date of Birth"
         placeholderText="Enter Date of Birth"
-        value={data.DOB || ""}
-        onChange={handleChange}
+        error={
+          errors.DOB
+            ? { type: "manual", message: errors.DOB.message || "" }
+            : undefined
+        }
       />
     </FormRowsWrapper>
   );
 };
 
 export default UserInfoForm;
-
-{
-  /* <FormRowSelect
-  name="gender"
-  labelText="Gender"
-  options={["Male", "Female"]}
-  // placeholderText="Enter name"
-  value={gender}
-  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (updateFields) {
-      updateFields({ [e.target.name]: e.target.value });
-    }
-  }}
-  // required
-/> */
-}
