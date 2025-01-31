@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontSize: {
+        clampHeading: "clamp(1.5rem, 2vw, 2rem)",
+        clampThankYou: "clamp(2.5rem, 2vw, 3.5rem)",
+      },
     },
   },
   plugins: [],

@@ -1,22 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import FormRowInput from "./multi-step-form/customComponents/FormRowInput";
 import FormRowsWrapper from "./multi-step-form/customComponents/FormRowsWrapper";
-import { useMultiFormContext } from "../context_api/useMultiFormContext";
-// import formData from "@/public/data/formData";
 
-type PaymentForm = {
-  cardNumber: string;
-  cardHolder: string;
-  expiryDate: string;
-  cvv: string;
-};
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "@/public/schema/formSchema";
 
-type PaymentFormProps = PaymentForm & {
-  updateFields: (fields: Partial<PaymentForm>) => void;
-};
+const PaymentDetailsForm: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+  } = useFormContext<FormData>();
 
+<<<<<<< HEAD
 const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
   updateFields,
 }) => {
@@ -29,41 +27,79 @@ const PaymentDetailsForm: React.FC<Partial<PaymentFormProps>> = ({
       updateFields({ [e.target.name]: e.target.value });
     }
   };
+=======
+  // Log values when component mounts
+  useEffect(() => {
+    console.log("Current values:", getValues());
+  }, [getValues]);
+>>>>>>> react-hook-form
 
   return (
     <FormRowsWrapper>
       <FormRowInput
         type="text"
-        name="cardNumber"
+        {...register("cardNumber")}
         labelText="cardNumber"
         className=""
         placeholderText="Enter Card Number"
+<<<<<<< HEAD
         onChange={handleChange}
         value={data.cardNumber ?? ""}
+=======
+        error={
+          errors.cardNumber
+            ? { type: "manual", message: errors.cardNumber.message || "" }
+            : undefined
+        }
+>>>>>>> react-hook-form
       />
       <FormRowInput
         type="text"
-        name="cardHolder"
+        {...register("cardHolder")}
         labelText="Name on Card"
         placeholderText="Card Holder's Name"
+<<<<<<< HEAD
         onChange={handleChange}
         value={data.cardHolder ?? ""}
+=======
+        error={
+          errors.cardHolder
+            ? { type: "manual", message: errors.cardHolder.message || "" }
+            : undefined
+        }
+>>>>>>> react-hook-form
       />
       <FormRowInput
         type="date"
-        name="expiryDate"
+        {...register("expiryDate")}
         labelText="Expiry Date"
         placeholderText="Expiry Date"
+<<<<<<< HEAD
         onChange={handleChange}
         value={data.expiryDate ?? ""}
+=======
+        error={
+          errors.expiryDate
+            ? { type: "manual", message: errors.expiryDate.message || "" }
+            : undefined
+        }
+>>>>>>> react-hook-form
       />
       <FormRowInput
         type="text"
-        name="cvv"
+        {...register("cvv")}
         labelText="CVV"
         placeholderText="cvv"
+<<<<<<< HEAD
         onChange={handleChange}
         value={data.cvv ?? ""}
+=======
+        error={
+          errors.cvv
+            ? { type: "manual", message: errors.cvv.message || "" }
+            : undefined
+        }
+>>>>>>> react-hook-form
       />
     </FormRowsWrapper>
   );

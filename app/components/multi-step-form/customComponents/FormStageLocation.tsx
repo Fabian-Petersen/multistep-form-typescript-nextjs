@@ -5,7 +5,7 @@ import { MultiHookProps } from "../../customHooks/useMultiFormHook";
 
 const FormStageLocation = ({ currentStepIndex, steps }: MultiHookProps) => {
   return (
-    <div className="absolute top-[5%] right-[5%]">
+    <div className="absolute top-[5%] right-[5%] text-white">
       {currentStepIndex + 1} / {steps.length}
     </div>
   );
