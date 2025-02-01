@@ -99,7 +99,7 @@ const MainFormComponent: React.FC = () => {
   return (
     <FormProvider {...methods}>
       <form
-        className="relative grid items-center p-6 justify-items-center gap-4 w-[60%] max-w-6xl h-auto bg-slate-800/90 rounded-[0.5rem] border border-gray-700/50"
+        className="relative grid py-4 px-2 sm:p-6 items-center gap-4 w-full max-w-6xl h-auto bg-slate-800/90 rounded-[0.5rem] border border-gray-700/50"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <FormStageLocation currentStepIndex={currentStepIndex} steps={steps} />
